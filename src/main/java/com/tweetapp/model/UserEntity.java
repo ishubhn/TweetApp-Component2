@@ -1,5 +1,7 @@
 package com.tweetapp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tweetapp.model.util.DateUtil;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -9,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.text.ParseException;
 import java.util.Date;
 
 @Data
@@ -35,6 +38,7 @@ public class UserEntity {
 	@Column(name = "date_of_birth")
 //	@Past(message = "Date should be in past")
 //	@NotBlank(message = "Date of birth is mandatory")
+	@JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
 	private Date dateOfBirth;
 
 	@NotBlank(message = "Password is mandatory")
@@ -43,28 +47,24 @@ public class UserEntity {
 
 	@Getter(value = AccessLevel.NONE)
 	@Setter(value = AccessLevel.NONE)
+	@Column(columnDefinition = "String default 'false'")
 	private String loggedIn;
 
 //	@OneToMany(mappedBy = "email", targetEntity = Tweet.class, cascade = CascadeType.ALL)
 //	// @JoinColumn(name = "email_id", referencedColumnName = "id")
 //	private List<Tweet> tweets;
 
-	public UserEntity(String emailId, String firstName, String lastName, String gender, Date dateOfBirth, String password) {
+	public UserEntity(String emailId, String firstName, String lastName, String gender, String dateOfBirth, String password)
+			throws ParseException {
 		this.emailId = emailId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
-		this.dateOfBirth = dateOfBirth;
+		this.dateOfBirth = DateUtil.convertToDate(dateOfBirth);
 		this.password = password;
+//		this.loggedIn = "false";
 	}
 
-//	public UserEntity(String emailId, String firstName, String lastName, String gender, String password) {
-//		this.emailId = emailId;
-//		this.firstName = firstName;
-//		this.lastName = lastName;
-//		this.gender = gender;
-//		this.password = password;
-//	}
 	public synchronized String getLoggedIn() {
 		return loggedIn;
 	}

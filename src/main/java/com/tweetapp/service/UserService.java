@@ -1,5 +1,6 @@
 package com.tweetapp.service;
 
+import com.tweetapp.exception.UserAlreadyExistException;
 import com.tweetapp.exception.UserNotFoundException;
 import com.tweetapp.model.UserEntity;
 import com.tweetapp.repository.UserRepository;
@@ -21,18 +22,25 @@ public class UserService {
 		return repo.findAll();
 	}
 
-	//	public Optional<UserEntity> findUserById(String email) {
 	public UserEntity findUserById(String email) {
-		return repo.findById(email).orElseThrow(() -> new UserNotFoundException("User not found for id -> " + email));
-
-//		if (user.isEmpty()) {
-//			throw new UserNotFoundException("Error");
-//		} else {
-//			return user;
-//		}
-//		Throw(() -> new UserNotFoundException("User not found for id -> " + email));
-
+		return repo.findById(email.toLowerCase()).orElseThrow(() -> new UserNotFoundException("User not found for id -> " + email));
 	}
 
+	public String registerUser(UserEntity user) {
+		// if user is not present -> then create new user
+//		if (!isUserPresent(user.getEmailId())) {
+			repo.save(user);
+			log.info("User not found.");
+//		} else {
+//			log.info("User already present");
+//			throw new UserAlreadyExistException("User already exists for the user -> " + user.getEmailId());
+//		}
+		return "User Created successfully -> " + user.toString();
+	}
 
+//	public boolean isUserPresent(String email) {
+//		UserEntity user = findUserById(email);
+//		boolean flag =  user != null ? true : false;
+//		return flag;
+//	}
 }

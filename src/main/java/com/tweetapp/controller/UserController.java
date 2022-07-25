@@ -7,10 +7,7 @@ import org.hibernate.event.service.spi.JpaBootstrapSensitive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +30,12 @@ public class UserController {
 
 	@GetMapping(path = "/user/search/{username}")
 	public ResponseEntity<UserEntity> findUserByID(@PathVariable String username) throws UserNotFoundException {
-//		if (service.findUserById(username) == null) { throw new UserNotFoundException("Error");}
 		return new ResponseEntity<>(service.findUserById(username), HttpStatus.OK);
+	}
+
+	@PostMapping(path = "/register")
+	public ResponseEntity<String> registerUser (@RequestBody UserEntity newUser) {
+		return new ResponseEntity<>(service.registerUser(newUser), HttpStatus.CREATED);
 	}
 
 }
