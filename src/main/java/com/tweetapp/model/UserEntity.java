@@ -47,8 +47,7 @@ public class UserEntity {
 
 	@Getter(value = AccessLevel.NONE)
 	@Setter(value = AccessLevel.NONE)
-	@Column(columnDefinition = "String default 'false'")
-	private String loggedIn;
+	private String loggedIn = "false";
 
 //	@OneToMany(mappedBy = "email", targetEntity = Tweet.class, cascade = CascadeType.ALL)
 //	// @JoinColumn(name = "email_id", referencedColumnName = "id")

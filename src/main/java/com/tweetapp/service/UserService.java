@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -28,19 +29,20 @@ public class UserService {
 
 	public String registerUser(UserEntity user) {
 		// if user is not present -> then create new user
-//		if (!isUserPresent(user.getEmailId())) {
+		if (!isUserPresent(user.getEmailId())) {
 			repo.save(user);
 			log.info("User not found.");
-//		} else {
-//			log.info("User already present");
-//			throw new UserAlreadyExistException("User already exists for the user -> " + user.getEmailId());
-//		}
+		} else {
+			log.info("User already present");
+			throw new UserAlreadyExistException("User already exists for the user -> " + user.getEmailId());
+		}
 		return "User Created successfully -> " + user.toString();
 	}
 
-//	public boolean isUserPresent(String email) {
-//		UserEntity user = findUserById(email);
-//		boolean flag =  user != null ? true : false;
-//		return flag;
-//	}
+	public boolean isUserPresent(String email) {
+		UserEntity user = repo.findById(email).orElse(null);
+//		Optional<UserEntity> user = Optional.ofNullable(repo.findById(email).orElse(null));
+		boolean flag =  user != null ? true : false;
+		return flag;
+	}
 }
