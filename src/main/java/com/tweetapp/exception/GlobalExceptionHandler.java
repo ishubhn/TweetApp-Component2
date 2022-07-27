@@ -22,12 +22,22 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(UserAlreadyExistException.class)
 	public ResponseEntity<?> handleUserAlreadyExistException
 			(UserAlreadyExistException exception, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
 				request.getDescription(false));
 
-		return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
+		return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
+	}
+
+	@ExceptionHandler(InvalidLoginException.class)
+	public ResponseEntity<?> handleInvalidLoginException
+			(InvalidLoginException exception, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
+				request.getDescription(false));
+
+		return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
 	}
 
 //	public ResponseEntity<?> handleTransactionSystemException
@@ -43,7 +53,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<?> handleGlobalException
 	(Exception exception, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
-				request.getDescription(false));
+				request.getDescription(true));
 
 		return new ResponseEntity(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 

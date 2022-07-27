@@ -4,15 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tweetapp.model.util.DateUtil;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -36,8 +35,8 @@ public class UserEntity {
 	private String gender;
 
 	@Column(name = "date_of_birth")
-//	@Past(message = "Date should be in past")
-//	@NotBlank(message = "Date of birth is mandatory")
+	@Past(message = "Date should be in past")
+	@NotBlank(message = "Date of birth is mandatory")
 	@JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
 	private Date dateOfBirth;
 
@@ -49,9 +48,9 @@ public class UserEntity {
 	@Setter(value = AccessLevel.NONE)
 	private String loggedIn = "false";
 
-//	@OneToMany(mappedBy = "email", targetEntity = Tweet.class, cascade = CascadeType.ALL)
-//	// @JoinColumn(name = "email_id", referencedColumnName = "id")
-//	private List<Tweet> tweets;
+	// @JoinColumn(name = "email_id", referencedColumnName = "id")
+	@OneToMany(mappedBy = "email", targetEntity = TweetEntity.class, cascade = CascadeType.ALL)
+	private List<TweetEntity> tweets;
 
 	public UserEntity(String emailId, String firstName, String lastName, String gender, String dateOfBirth, String password)
 			throws ParseException {
@@ -61,9 +60,10 @@ public class UserEntity {
 		this.gender = gender;
 		this.dateOfBirth = DateUtil.convertToDate(dateOfBirth);
 		this.password = password;
-//		this.loggedIn = "false";
+
 	}
 
+	// Getters and Setters
 	public synchronized String getLoggedIn() {
 		return loggedIn;
 	}
@@ -71,4 +71,5 @@ public class UserEntity {
 	public synchronized void setLoggedIn(String loggedIn) {
 		this.loggedIn = loggedIn;
 	}
+
 }

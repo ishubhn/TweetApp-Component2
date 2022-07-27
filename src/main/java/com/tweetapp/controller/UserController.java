@@ -2,13 +2,16 @@ package com.tweetapp.controller;
 
 import com.tweetapp.exception.UserNotFoundException;
 import com.tweetapp.model.UserEntity;
+import com.tweetapp.model.dto.ForgotPasswordRequest;
+import com.tweetapp.model.dto.LoginRequest;
+import com.tweetapp.model.dto.UserResponse;
 import com.tweetapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -16,11 +19,6 @@ import java.util.List;
 public class UserController {
 	@Autowired
 	UserService service;
-
-	@GetMapping(path = "/hello")
-	public String helloWorld() {
-		return "Hello World";
-	}
 
 	@GetMapping(path = "/users/all")
 	public ResponseEntity<List<UserEntity>> getAllUsers() {
@@ -37,4 +35,16 @@ public class UserController {
 		return new ResponseEntity<>(service.registerUser(newUser), HttpStatus.CREATED);
 	}
 
+	@PostMapping(path = "/login")
+	public ResponseEntity<UserResponse> loginUser (@RequestBody LoginRequest request) {
+		return new ResponseEntity<>(service.login(request), HttpStatus.OK);
+	}
+
+	@PostMapping(path = "/{username}/forgot")
+	public ResponseEntity<String> forgotPassword (@PathVariable String username,
+	                                              @RequestBody ForgotPasswordRequest request) throws ParseException {
+//		return new ResponseEntity<>(service.updatePassword(username, password, newPassword, dateOfBirth), HttpStatus.OK);
+		return new ResponseEntity<>(service.updatePassword(username, request.getPassword(),
+					request.getNewPassword(), request.getDateOfBirth()), HttpStatus.OK);
+	}
 }
