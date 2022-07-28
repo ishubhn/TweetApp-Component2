@@ -43,8 +43,12 @@ public class UserController {
 	@PostMapping(path = "/{username}/forgot")
 	public ResponseEntity<String> forgotPassword (@PathVariable String username,
 	                                              @RequestBody ForgotPasswordRequest request) throws ParseException {
-//		return new ResponseEntity<>(service.updatePassword(username, password, newPassword, dateOfBirth), HttpStatus.OK);
 		return new ResponseEntity<>(service.updatePassword(username, request.getPassword(),
 					request.getNewPassword(), request.getDateOfBirth()), HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/{username}/logout")
+	public ResponseEntity<String> logout (@PathVariable String username) {
+		return new ResponseEntity<>(service.logout(username), HttpStatus.OK);
 	}
 }

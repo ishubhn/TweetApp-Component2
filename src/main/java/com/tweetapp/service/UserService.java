@@ -76,17 +76,15 @@ public class UserService {
 		return null;
 	} // ok
 
-	public String updatePassword(String email, String password, String newPassword, String dateOfBirth)
-			{
-//	public String updatePassword(String email, String password, String newPassword) {
+	public String updatePassword(String email, String password, String newPassword, String dateOfBirth) {
+
 		if (isUserPresent(email)) {
 			UserEntity user = findUserById(email);
 			log.info("User present.");
 
 			if (user.getPassword().equals(password)
 					&& user.getLoggedIn().equalsIgnoreCase("true")
-					&& DateUtil.convertDateToString(user.getDateOfBirth()).equalsIgnoreCase(dateOfBirth))
-			{
+					&& DateUtil.convertDateToString(user.getDateOfBirth()).equalsIgnoreCase(dateOfBirth)) {
 				if (user.getPassword().equals(newPassword)) {
 					log.error("New password must be different from old password");
 					throw new InvalidLoginException("New password must be different from old password");
@@ -104,4 +102,21 @@ public class UserService {
 		}
 		return "An error occurred while updating password";
 	} // ok
+
+	public String logout(String email) {
+		if (isUserPresent(email)) {
+			UserEntity user = findUserById(email);
+
+			if (user.getLoggedIn().equalsIgnoreCase("true")) {
+				user.setLoggedIn("false");
+				repo.save(user);
+				log.info("User logged out successfully");
+				return "User logged out successfully";
+			} else {
+				throw new InvalidLoginException("User is not logged in");
+			}
+		} else {
+			return "";
+		}
+	}
 }
