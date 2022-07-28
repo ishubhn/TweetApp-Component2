@@ -5,6 +5,7 @@ import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -14,6 +15,7 @@ import java.util.Date;
 public class TweetEntity {
 	@Id
 	@GeneratedValue
+	@NotNull
 	private long id;
 
 	@ManyToOne(targetEntity = UserEntity.class)
