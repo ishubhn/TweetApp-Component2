@@ -49,7 +49,11 @@ public class UserEntity {
 	private String loggedIn = "false";
 
 	// @JoinColumn(name = "email_id", referencedColumnName = "id")
-	@OneToMany(mappedBy = "email", targetEntity = TweetEntity.class, cascade = CascadeType.ALL)
+	//	@OneToMany(mappedBy = "email", targetEntity = TweetEntity.class, cascade = CascadeType.ALL)
+	//	private List<TweetEntity> tweets;
+
+	@OneToMany(targetEntity = TweetEntity.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "email",referencedColumnName = "email")
 	private List<TweetEntity> tweets;
 
 	public UserEntity(String emailId, String firstName, String lastName, String gender, String dateOfBirth, String password)

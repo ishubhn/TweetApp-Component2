@@ -24,6 +24,8 @@ public class UserService {
 	@Autowired
 	private UserRepository repo;
 
+	// check if username available
+
 	public List<UserEntity> findAllUsers() {
 		return repo.findAll();
 	} // ok

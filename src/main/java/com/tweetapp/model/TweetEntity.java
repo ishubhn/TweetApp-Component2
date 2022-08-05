@@ -1,12 +1,12 @@
 package com.tweetapp.model;
 
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,17 +18,19 @@ public class TweetEntity {
 	@NotNull
 	private long id;
 
-	@ManyToOne(targetEntity = UserEntity.class)
 	private String email;
+
+	@NotNull
 	private String body;
-	private int likes;
-	private Date timestamp;
+	private int likes = 0;
+	private Date timestamp = new Date();
+
+	@OneToMany(targetEntity = ReplyEntity.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "id",referencedColumnName = "id")
+	private List<ReplyEntity> replies;
 
 	public TweetEntity(String email, String body) {
 		this.email = email;
 		this.body = body;
-		this.likes = 0;
-		this.timestamp = new Date();
 	}
-
 }
