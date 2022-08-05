@@ -23,7 +23,6 @@ public class TweetController {
 	@PostMapping(path = "/{username}/add")
 	public ResponseEntity<String> createTweet(@PathVariable String username, @RequestBody TweetEntity tweetEntity) {
 		tweetEntity.setEmail(username);
-
-		return new ResponseEntity<>(service.registerTweet(tweetEntity), HttpStatus.OK);
+		return new ResponseEntity<>(service.createTweet(tweetEntity), HttpStatus.OK);
 	}
 }
