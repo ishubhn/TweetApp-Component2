@@ -58,6 +58,12 @@ public class TweetController {
 		return new ResponseEntity<>(service.likeTweet(username, id), HttpStatus.OK);
 	}
 
+	@DeleteMapping(path = "/{username}/delete/{id}")
+	public ResponseEntity<String> deleteTweet(@PathVariable String username, @PathVariable long id) {
+		userService.isUserLoggedIn(username);
+		return new ResponseEntity<>(service.deleteTweet(username,id),HttpStatus.NO_CONTENT);
+	}
+
 	private void validateTweetId(long tweetId) {
 		if (tweetId == 0) {
 			throw new TweetNotFoundException("Tweet not found");

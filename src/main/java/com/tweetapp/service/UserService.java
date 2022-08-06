@@ -56,6 +56,8 @@ public class UserService {
 		if (user != null) {
 			if (user.getLoggedIn().equalsIgnoreCase("true")) {
 				flag = true;
+			} else {
+				throw new InvalidLoginException("User not logged in -> " + email);
 			}
 		}
 

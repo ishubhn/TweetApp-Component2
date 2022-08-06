@@ -65,6 +65,7 @@ public class TweetService {
 			log.info("tweet id -> " + tweet.getId() + " updated successfully");
 			return toTweetResponse(tweet);
 		} else {
+			log.error("Unable to update error -> " + tweet.getId());
 			return null;
 		}
 	}
@@ -74,5 +75,17 @@ public class TweetService {
 		tweet.setLikes(tweet.getLikes() + 1);
 		repo.save(tweet);
 		return tweet;
+	}
+
+	public String deleteTweet(String email, long id) {
+		TweetEntity tweet = repo.findTweetById(id).orElse(null);
+		if(tweet != null && tweet.getEmail().equalsIgnoreCase(email)) {
+			log.info("Tweet deleted. -> email: " + email + ", id -> " + id + ".");
+			repo.deleteById(id);
+			return "Deleted";
+		} else {
+			log.error("Tweet not found for id -> " + id);
+			throw new TweetNotFoundException("Tweet not found -> " + id);
+		}
 	}
 }
