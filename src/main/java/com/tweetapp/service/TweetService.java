@@ -46,11 +46,11 @@ public class TweetService {
 		return repo.findByEmailAndId(email, id);
 	}
 
-	/*	public TweetResponse getTweetById() {
-	//		return null;
-		}
-	*/
-	// Add validation for Login status (if true), check if user exists
+	public TweetEntity findTweetById(long id) {
+		return repo.findTweetById(id).orElse(null);
+	}
+
+	// Add validation for check if user exists
 	public String createTweet(TweetEntity tweet) {
 		repo.save(tweet);
 		return "Tweet registered";

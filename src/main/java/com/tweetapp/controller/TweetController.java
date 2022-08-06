@@ -39,7 +39,7 @@ public class TweetController {
 		userService.isUserLoggedIn(username);
 		isValidTweet(body);
 		return new ResponseEntity<>(service.createTweet(new TweetEntity(username, body)),
-				HttpStatus.OK);
+				HttpStatus.CREATED);
 	}
 
 	@PutMapping(path = "/{username}/update/{id}")

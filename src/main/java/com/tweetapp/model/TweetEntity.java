@@ -35,7 +35,4 @@ public class TweetEntity {
 		this.body = body;
 	}
 
-	public TweetEntity(String body) {
-		this.body = body;
-	}
 }
