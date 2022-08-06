@@ -22,11 +22,12 @@ public class TweetEntity {
 
 	@NotNull
 	private String body;
-	private int likes = 0;
-	private Date timestamp = new Date();
+
+	private int likes = 0;               // Default value of likes during creation is 0
+	private Date timestamp = new Date(); // Default date is taken as current date
 
 	@OneToMany(targetEntity = ReplyEntity.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id",referencedColumnName = "id")
+	@JoinColumn(name = "id", referencedColumnName = "id")
 	private List<ReplyEntity> replies;
 
 	public TweetEntity(String email, String body) {

@@ -55,7 +55,9 @@ public class TweetService {
 	}
 
 	public TweetEntity likeTweet(String email, long id) {
-		findTweetsByUserAndId(email, id).setLikes(findTweetsByUserAndId(email, id).getLikes() + 1);
-		return findTweetsByUserAndId(email, id);
+		TweetEntity tweet = findTweetsByUserAndId(email, id);
+		tweet.setLikes(tweet.getLikes() + 1);
+		repo.save(tweet);
+		return tweet;
 	}
 }

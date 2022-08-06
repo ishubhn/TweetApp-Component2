@@ -17,7 +17,8 @@ public class ReplyEntity {
 	@Id
 	@GeneratedValue
 	private long id;
-	private String reply;
-	private Date date;
+	private String body;
+	private int likes = 0;
+	private Date date = new Date();
 	private String email;
 }

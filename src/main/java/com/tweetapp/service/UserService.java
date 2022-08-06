@@ -3,9 +3,10 @@ package com.tweetapp.service;
 import com.tweetapp.exception.InvalidLoginException;
 import com.tweetapp.exception.UserAlreadyExistException;
 import com.tweetapp.exception.UserNotFoundException;
+import com.tweetapp.mapper.UserMapper;
 import com.tweetapp.model.UserEntity;
-import com.tweetapp.model.dto.LoginRequest;
-import com.tweetapp.model.dto.UserResponse;
+import com.tweetapp.model.dto.request.LoginRequest;
+import com.tweetapp.model.dto.response.UserResponse;
 import com.tweetapp.model.util.DateUtil;
 import com.tweetapp.repository.UserRepository;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.tweetapp.mapper.UserMapper.toUserResponse;
 
@@ -24,10 +26,16 @@ public class UserService {
 	@Autowired
 	private UserRepository repo;
 
-	// check if username available
-
 	public List<UserEntity> findAllUsers() {
 		return repo.findAll();
+	} // ok
+
+	public List<UserResponse> getUserResponseList() {
+		return repo
+				.findAll()
+				.stream()
+				.map(UserMapper::toUserResponse)
+				.collect(Collectors.toList());
 	} // ok
 
 	public UserEntity findUserById(String email) {
@@ -35,13 +43,31 @@ public class UserService {
 				.orElseThrow(() -> new UserNotFoundException("User not found for id -> " + email));
 	}    // ok
 
+	public UserResponse getUserResponseByUserName(String username) {
+		return toUserResponse(findUserById(username));
+	}
+
+	// check if username available
+	// check if is user logged in
+	public boolean isUserLoggedIn(String email) {
+		boolean flag = false;
+		UserEntity user = repo.findById(email).orElse(null);
+
+		if (user != null) {
+			if (user.getLoggedIn().equalsIgnoreCase("true")) {
+				flag = true;
+			}
+		}
+
+		return flag;
+	}
+
 	public boolean isUserPresent(String email) {
 		UserEntity user = repo.findById(email).orElse(null);
 		return user != null;
 	} // ok
 
 	public String registerUser(UserEntity user) {
-
 		if (!isUserPresent(user.getEmailId())) {  // user not present already
 			repo.save(user);
 			log.info("User not found. User created successfully");

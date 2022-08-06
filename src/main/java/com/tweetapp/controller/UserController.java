@@ -2,9 +2,9 @@ package com.tweetapp.controller;
 
 import com.tweetapp.exception.UserNotFoundException;
 import com.tweetapp.model.UserEntity;
-import com.tweetapp.model.dto.ForgotPasswordRequest;
-import com.tweetapp.model.dto.LoginRequest;
-import com.tweetapp.model.dto.UserResponse;
+import com.tweetapp.model.dto.request.ForgotPasswordRequest;
+import com.tweetapp.model.dto.request.LoginRequest;
+import com.tweetapp.model.dto.response.UserResponse;
 import com.tweetapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,13 +21,13 @@ public class UserController {
 	UserService service;
 
 	@GetMapping(path = "/users/all")
-	public ResponseEntity<List<UserEntity>> getAllUsers() {
-		return new ResponseEntity<>(service.findAllUsers(), HttpStatus.OK);
+	public ResponseEntity<List<UserResponse>> getAllUsers() {
+		return new ResponseEntity<>(service.getUserResponseList(), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/user/search/{username}")
-	public ResponseEntity<UserEntity> findUserByID(@PathVariable String username) throws UserNotFoundException {
-		return new ResponseEntity<>(service.findUserById(username), HttpStatus.OK);
+	public ResponseEntity<UserResponse> findUserByID(@PathVariable String username) throws UserNotFoundException {
+		return new ResponseEntity<>(service.getUserResponseByUserName(username), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/register")
