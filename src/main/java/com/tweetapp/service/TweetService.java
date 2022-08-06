@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.tweetapp.mapper.TweetMapper.toTweetResponse;
+
 @Service
 public class TweetService {
 
@@ -40,18 +42,31 @@ public class TweetService {
 				.collect(Collectors.toList());
 	}
 
-	public TweetResponse getTweetById() {
-		return null;
+	public TweetEntity findTweetsByUserAndId(String email, long id) {
+		return repo.findByEmailAndId(email, id);
 	}
 
+	/*	public TweetResponse getTweetById() {
+	//		return null;
+		}
+	*/
 	// Add validation for Login status (if true), check if user exists
 	public String createTweet(TweetEntity tweet) {
 		repo.save(tweet);
 		return "Tweet registered";
 	}
 
-	public TweetEntity findTweetsByUserAndId(String email, long id) {
-		return repo.findByEmailAndId(email, id);
+	public TweetResponse updateTweet(long id, String body) {
+		// Optional<TweetEntity> tweet = repo.findTweetById(id);
+		TweetEntity tweet = repo.findTweetById(id).orElse(null);
+		if (tweet != null) {
+			tweet.setBody(body);
+			repo.save(tweet);
+			log.info("tweet id -> " + tweet.getId() + " updated successfully");
+			return toTweetResponse(tweet);
+		} else {
+			return null;
+		}
 	}
 
 	public TweetEntity likeTweet(String email, long id) {

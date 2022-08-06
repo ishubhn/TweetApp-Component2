@@ -42,6 +42,15 @@ public class TweetController {
 				HttpStatus.OK);
 	}
 
+	@PutMapping(path = "/{username}/update/{id}")
+	public ResponseEntity<TweetResponse> updateTweet (@PathVariable String username,
+	                                                  @PathVariable long id,
+	                                                  @RequestParam String body) {
+		userService.isUserLoggedIn(username);
+		isValidTweet(body);
+		return new ResponseEntity<>(service.updateTweet(id, body), HttpStatus.OK);
+	}
+
 	@PutMapping(path = "/{username}/like/{id}")
 	public ResponseEntity<TweetEntity> likeTweet(@PathVariable String username, @PathVariable long id) {
 //		userService.isUserLoggedIn(username); //can be used while editing

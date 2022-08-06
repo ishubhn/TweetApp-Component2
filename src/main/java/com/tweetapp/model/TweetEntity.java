@@ -34,4 +34,8 @@ public class TweetEntity {
 		this.email = email;
 		this.body = body;
 	}
+
+	public TweetEntity(String body) {
+		this.body = body;
+	}
 }
