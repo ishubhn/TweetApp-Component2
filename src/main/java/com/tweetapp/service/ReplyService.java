@@ -36,6 +36,7 @@ public class ReplyService {
 			repo.save(reply);
 			return reply;
 		} else {
+			log.info(tweet.toString());
 			throw new TweetNotFoundException("Tweet Not found to register reply");
 		}
 	}

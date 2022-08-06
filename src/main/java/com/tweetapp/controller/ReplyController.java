@@ -24,7 +24,8 @@ public class ReplyController {
 	public ResponseEntity<ReplyEntity> postReply(@PathVariable String username, @PathVariable long id,
 	                                             @RequestParam String body) {
 		isValidTweet(body);
-		return new ResponseEntity<>(replyService.postReply(new ReplyEntity(id,username,body)), HttpStatus.CREATED);
+		return new ResponseEntity<>
+				(replyService.postReply(new ReplyEntity(id,username,body)), HttpStatus.CREATED);
 	}
 
 	private void isValidTweet(String tweet) {
