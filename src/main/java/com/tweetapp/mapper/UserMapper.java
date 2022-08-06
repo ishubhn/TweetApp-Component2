@@ -1,8 +1,8 @@
 package com.tweetapp.mapper;
 
 import com.tweetapp.model.UserEntity;
-import com.tweetapp.model.dto.UserRequest;
-import com.tweetapp.model.dto.UserResponse;
+import com.tweetapp.model.dto.request.UserRequest;
+import com.tweetapp.model.dto.response.UserResponse;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;

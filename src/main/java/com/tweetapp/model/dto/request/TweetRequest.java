@@ -1,4 +1,4 @@
-package com.tweetapp.model.dto;
+package com.tweetapp.model.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
-	private String email;
-	private String password;
+public class TweetRequest {
+	private String body;
 }
