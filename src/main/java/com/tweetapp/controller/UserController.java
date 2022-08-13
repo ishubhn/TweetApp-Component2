@@ -47,6 +47,11 @@ public class UserController {
 					request.getNewPassword(), request.getDateOfBirth()), HttpStatus.OK);
 	}
 
+	@DeleteMapping(path = "/{username}/delete")
+	public ResponseEntity<String> deleteUser (@PathVariable String username) {
+		return new ResponseEntity<>(service.deleteUser(username), HttpStatus.NO_CONTENT);
+	}
+
 	@GetMapping(path = "/{username}/logout")
 	public ResponseEntity<String> logout (@PathVariable String username) {
 		return new ResponseEntity<>(service.logout(username), HttpStatus.OK);

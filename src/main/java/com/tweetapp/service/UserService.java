@@ -133,6 +133,22 @@ public class UserService {
 		return "An error occurred while updating password";
 	} // ok
 
+	public String deleteUser(String email) {
+		if (isUserPresent(email)) {
+			UserEntity user = findUserById(email);
+
+			if (user.getLoggedIn().equalsIgnoreCase("true")) {
+				repo.delete(user);
+				log.info("User deleted successfully");
+				return "User deleted successfully";
+			} else {
+				throw new InvalidLoginException("User is not logged in");
+			}
+		} else {
+			throw new UserNotFoundException("User not found");
+		}
+	}
+
 	public String logout(String email) {
 		if (isUserPresent(email)) {
 			UserEntity user = findUserById(email);
@@ -146,7 +162,8 @@ public class UserService {
 				throw new InvalidLoginException("User is not logged in");
 			}
 		} else {
-			return "";
+			throw new UserNotFoundException("User not found");
 		}
 	}
+
 }
