@@ -1,0 +1,12 @@
+# Ignore EER Files
+*.mwb
+*.bak
+
+# Ignore Ide file for IntelliJ
+.idea
+
+# Ignore the git and cache folders
+.git
+
+# Ignore all markdown and class files
+*.md
