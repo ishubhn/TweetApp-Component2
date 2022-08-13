@@ -3,6 +3,7 @@ package com.tweetapp.controller;
 import com.tweetapp.exception.TweetNotFoundException;
 import com.tweetapp.model.ReplyEntity;
 import com.tweetapp.service.ReplyService;
+import com.tweetapp.service.TweetService;
 import com.tweetapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +19,19 @@ public class ReplyController {
 	UserService userService;
 
 	@Autowired
+	TweetService tweetService;
+
+	@Autowired
 	ReplyService replyService;
 
 	@PostMapping(path = "/{username}/reply/{id}")
 	public ResponseEntity<ReplyEntity> postReply(@PathVariable String username, @PathVariable long id,
 	                                             @RequestParam String body) {
 		isValidTweet(body);
-		return new ResponseEntity<>
-				(replyService.postReply(new ReplyEntity(id,username,body)), HttpStatus.CREATED);
+			return new ResponseEntity<>
+					(replyService.postReply(new ReplyEntity(id,username,body)), HttpStatus.CREATED);
+//		return new ResponseEntity<>
+//				(replyService.postReply(new ReplyEntity(username,body,tweetService.findTweetById(id))), HttpStatus.CREATED);
 	}
 
 	private void isValidTweet(String tweet) {

@@ -51,9 +51,9 @@ public class TweetService {
 	}
 
 	// Add validation for check if user exists
-	public String createTweet(TweetEntity tweet) {
+	public TweetResponse createTweet(TweetEntity tweet) {
 		repo.save(tweet);
-		return "Tweet registered";
+		return toTweetResponse(tweet);
 	}
 
 	public TweetResponse updateTweet(long id, String body) {

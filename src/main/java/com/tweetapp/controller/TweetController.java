@@ -34,7 +34,7 @@ public class TweetController {
 	}
 
 	@PostMapping(path = "/{username}/add")
-	public ResponseEntity<String> postTweet
+	public ResponseEntity<TweetResponse> postTweet
 			(@PathVariable String username, @RequestParam String body) {
 		userService.isUserLoggedIn(username);
 		isValidTweet(body);

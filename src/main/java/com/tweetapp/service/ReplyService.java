@@ -29,16 +29,19 @@ public class ReplyService {
 	}
 
 	public ReplyEntity postReply(ReplyEntity reply) {
-		TweetEntity tweet = tweetService.findTweetById(reply.getId());
+//		TweetEntity tweet = tweetService.findTweetById(reply.getId());
 
-		if (tweet != null) {
-			log.info("Reply created -> " + reply.toString());
-			repo.save(reply);
-			return reply;
-		} else {
-			log.info(tweet.toString());
-			throw new TweetNotFoundException("Tweet Not found to register reply");
-		}
+//  	if (tweet != null) {
+//			log.info("Reply created -> " + reply.toString());
+//			repo.save(reply);
+//			return reply;
+//		} else {
+//			log.info(tweet.toString());
+//			throw new TweetNotFoundException("Tweet Not found to register reply");
+//		}
+		log.info("Reply created -> " + reply.toString());
+		repo.save(reply);
+		return reply;
 	}
 
 	// add likes for reply
