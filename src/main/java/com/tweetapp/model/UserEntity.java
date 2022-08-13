@@ -48,8 +48,8 @@ public class UserEntity {
 	@Setter(value = AccessLevel.NONE)
 	private String loggedIn = "false";
 
-	@OneToMany(targetEntity = TweetEntity.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "email",referencedColumnName = "email")
+//	@JoinColumn(name = "email", referencedColumnName = "email")
+	@OneToMany(targetEntity = TweetEntity.class, cascade = CascadeType.ALL, mappedBy = "email")
 	private List<TweetEntity> tweets;
 
 	public UserEntity(String emailId, String firstName, String lastName, String gender, String dateOfBirth, String password)
