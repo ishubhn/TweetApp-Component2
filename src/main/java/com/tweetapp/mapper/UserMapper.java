@@ -12,11 +12,11 @@ public class UserMapper {
 
 	public static UserEntity mapUser(UserRequest userRequest) throws ParseException {
 		return new UserEntity(userRequest.getEmailId(), userRequest.getFirstName(), userRequest.getLastName(),
-				userRequest.getGender(), userRequest.getDateOfBirth(), userRequest.getPassword());
+				userRequest.getGender(), userRequest.getContactNumber(),userRequest.getDateOfBirth(), userRequest.getPassword());
 	}
 
 	public static UserResponse toUserResponse(UserEntity user) {
 		return new UserResponse(user.getEmailId(), user.getFirstName(), user.getLastName(),
-				user.getGender(), user.getDateOfBirth());
+				user.getGender(), user.getContactNumber(), user.getDateOfBirth());
 	}
 }

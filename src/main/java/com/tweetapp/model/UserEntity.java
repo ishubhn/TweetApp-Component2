@@ -24,7 +24,7 @@ public class UserEntity {
 	private String emailId;
 
 	@Column(name = "first_name")
-	@Size(min = 2)
+	@Size(min = 2, max = 30, message = "Name size should be at least of 2 characters")
 	@NotBlank(message = "First Name is mandatory")
 	private String firstName;
 
@@ -40,8 +40,14 @@ public class UserEntity {
 	@JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
 	private Date dateOfBirth;
 
+	@Column(name = "contact_number")
+	@Pattern(regexp = "^[0-9]{10}$", message = "Number must be of 10 digit")
+	private String contactNumber;
+
 	@NotBlank(message = "Password is mandatory")
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+			message = "Password must contain at least 1 digit, 1 lowercase, 1 uppercase and" +
+					"1 symbol characters")
 	private String password;
 
 	@Getter(value = AccessLevel.NONE)
@@ -52,15 +58,16 @@ public class UserEntity {
 	@OneToMany(targetEntity = TweetEntity.class, cascade = CascadeType.ALL, mappedBy = "email")
 	private List<TweetEntity> tweets;
 
-	public UserEntity(String emailId, String firstName, String lastName, String gender, String dateOfBirth, String password)
+	public UserEntity(String emailId, String firstName, String lastName, String gender, String dateOfBirth,
+	                  String contactNumber,String password)
 			throws ParseException {
 		this.emailId = emailId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
+		this.contactNumber = contactNumber;
 		this.dateOfBirth = DateUtil.convertToDate(dateOfBirth);
 		this.password = password;
-
 	}
 
 	// Getters and Setters

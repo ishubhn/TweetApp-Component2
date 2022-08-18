@@ -69,15 +69,18 @@ public class UserService {
 		return user != null;
 	} // ok
 
-	public String registerUser(UserEntity user) {
+	public UserResponse registerUser(UserEntity user) {
 		if (!isUserPresent(user.getEmailId())) {  // user not present already
 			repo.save(user);
 			log.info("User not found. User created successfully");
+			log.info("User Created successfully -> " + user);
 		} else {
 			log.info("User already present");
-			throw new UserAlreadyExistException("User already exists for the user -> " + user.getEmailId());
+			throw new UserAlreadyExistException("User already exists for the user -> "
+					+ user.getEmailId());
 		}
-		return "User Created successfully -> " + user;
+		// return "User Created successfully -> " + user;
+		return toUserResponse(user);
 	} // ok
 
 	public UserResponse login(LoginRequest request) {
