@@ -17,21 +17,24 @@ ___
 > cd <kafka-location>\kafka
 
 ### Start the ZooKeeper service
-> bin\windowszookeeper-server-start.bat config\zookeeper.properties
+> bin\windows\zookeeper-server-start.bat config\zookeeper.properties
 
 ### Start the Kafka Environment
 **Start the Kafka broker service**
 > bin\windows\kafka-server-start.bat config\server.properties
 
-**Start the Kafka broker service**
-> bin\windows\kafka-server-start.bat config\server.properties
-
 ### CREATE A TOPIC TO STORE YOUR EVENTS
 **Before you can write your first events, you must create a topic**
-> bin\windows\kafka-topics.bat --create --topic quickstart-events --bootstrap-server localhost:9092
+> bin\windows\kafka-topics.bat --create --topic tweet-events --bootstrap-server localhost:9092
 
 ### Start Producer
-> bin\windows\kafka-console-producer.bat --topic quickstart-events --bootstrap-server localhost:9092
+> bin\windows\kafka-console-producer.bat --topic tweet-events --bootstrap-server localhost:9092
 
 ### Start Consumer
-> bin\windows\kafka-console-consumer.bat --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+> bin\windows\kafka-console-consumer.bat --topic tweet-events --from-beginning --bootstrap-server localhost:9092
+
+### List All Topics
+> bin\windows\kafka-topics.bat --bootstrap-server=localhost:9092 --list
+
+### Delete topic
+> bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic tweet-events --from-beginning

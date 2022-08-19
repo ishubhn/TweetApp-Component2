@@ -5,6 +5,7 @@ import com.tweetapp.model.UserEntity;
 import com.tweetapp.model.dto.request.ForgotPasswordRequest;
 import com.tweetapp.model.dto.request.LoginRequest;
 import com.tweetapp.model.dto.response.UserResponse;
+import com.tweetapp.producer.TweetProducer;
 import com.tweetapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,13 @@ public class UserController {
 	@Autowired
 	UserService service;
 
+	@Autowired
+	TweetProducer tweetProducer;
+
 	@GetMapping(path = "/users/all")
 	public ResponseEntity<List<UserResponse>> getAllUsers() {
+		tweetProducer.sendMessage("All users request fetched -> "
+				+ service.getUserResponseList().toString());
 		return new ResponseEntity<>(service.getUserResponseList(), HttpStatus.OK);
 	}
 
@@ -32,6 +38,7 @@ public class UserController {
 
 	@PostMapping(path = "/register")
 	public ResponseEntity<UserResponse> registerUser (@RequestBody UserEntity newUser) {
+		tweetProducer.sendMessage("User created: -> " + newUser);
 		return new ResponseEntity<>(service.registerUser(newUser), HttpStatus.CREATED);
 	}
 
