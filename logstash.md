@@ -13,7 +13,6 @@ ___
 **Go to Elasticsearch folder and run following command**
 
 > bin\elasticsearch.bat
-
 ___
 
 ### Kibana
@@ -23,7 +22,9 @@ ___
 > kibana\config\kibana.yml
 
 ***Enable the line (remove the '#' from line) and save***
+
 > elasticsearch.hosts:["http://localhost:9200"]
 
 ***Open the console in the kibana folder***
+
 > bin\kibana.bat
