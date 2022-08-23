@@ -1,4 +1,4 @@
-package com.tweetapp.producer;
+package com.tweetapp.kafka.producer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

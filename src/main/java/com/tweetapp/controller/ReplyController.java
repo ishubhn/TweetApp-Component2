@@ -1,8 +1,8 @@
 package com.tweetapp.controller;
 
 import com.tweetapp.exception.TweetNotFoundException;
+import com.tweetapp.kafka.producer.TweetProducer;
 import com.tweetapp.model.ReplyEntity;
-import com.tweetapp.producer.TweetProducer;
 import com.tweetapp.service.ReplyService;
 import com.tweetapp.service.TweetService;
 import com.tweetapp.service.UserService;

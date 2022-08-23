@@ -1,9 +1,9 @@
 package com.tweetapp.controller;
 
 import com.tweetapp.exception.TweetNotFoundException;
+import com.tweetapp.kafka.producer.TweetProducer;
 import com.tweetapp.model.TweetEntity;
 import com.tweetapp.model.dto.response.TweetResponse;
-import com.tweetapp.producer.TweetProducer;
 import com.tweetapp.service.TweetService;
 import com.tweetapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

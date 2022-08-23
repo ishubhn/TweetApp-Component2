@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TweetConsumer {
 
-    @KafkaListener(topics = "tweet-events", groupId = "gteroup_id")
+    @KafkaListener(topics = "tweet-events", groupId = "test-consumer-group")
     public void consume(String message) {
         log.info("message -> {}", message);
         System.out.println("message = " + message);

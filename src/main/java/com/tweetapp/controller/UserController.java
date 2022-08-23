@@ -1,11 +1,11 @@
 package com.tweetapp.controller;
 
 import com.tweetapp.exception.UserNotFoundException;
+import com.tweetapp.kafka.producer.TweetProducer;
 import com.tweetapp.model.UserEntity;
 import com.tweetapp.model.dto.request.ForgotPasswordRequest;
 import com.tweetapp.model.dto.request.LoginRequest;
 import com.tweetapp.model.dto.response.UserResponse;
-import com.tweetapp.producer.TweetProducer;
 import com.tweetapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

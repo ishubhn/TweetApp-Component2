@@ -1,4 +1,4 @@
-package com.tweetapp.producer;
+package com.tweetapp.kafka.producer;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
