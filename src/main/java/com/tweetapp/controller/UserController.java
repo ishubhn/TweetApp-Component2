@@ -26,46 +26,46 @@ public class UserController {
 
 	@GetMapping(path = "/users/all")
 	public ResponseEntity<List<UserResponse>> getAllUsers() {
-		tweetProducer.sendMessage("All users request fetched -> "
+		tweetProducer.sendMessage("[kafka]All users request fetched -> "
 				+ service.getUserResponseList().toString());
 		return new ResponseEntity<>(service.getUserResponseList(), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/user/search/{username}")
 	public ResponseEntity<UserResponse> findUserByID(@PathVariable String username) throws UserNotFoundException {
-		tweetProducer.sendMessage("User request fetched for -> " + username);
+		tweetProducer.sendMessage("[kafka]User request fetched for -> " + username);
 		return new ResponseEntity<>(service.getUserResponseByUserName(username), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/register")
 	public ResponseEntity<UserResponse> registerUser (@RequestBody UserEntity newUser) {
-		tweetProducer.sendMessage("User created: -> " + newUser);
+		tweetProducer.sendMessage("[kafka]User created: -> " + newUser);
 		return new ResponseEntity<>(service.registerUser(newUser), HttpStatus.CREATED);
 	}
 
 	@PostMapping(path = "/login")
 	public ResponseEntity<UserResponse> loginUser (@RequestBody LoginRequest request) {
-		tweetProducer.sendMessage("User logged in successfully.");
+		tweetProducer.sendMessage("[kafka]User logged in successfully.");
 		return new ResponseEntity<>(service.login(request), HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/{username}/forgot")
 	public ResponseEntity<String> forgotPassword (@PathVariable String username,
 	                                              @RequestBody ForgotPasswordRequest request) throws ParseException {
-		tweetProducer.sendMessage("User password update request initiated");
+		tweetProducer.sendMessage("[kafka]User password update request initiated");
 		return new ResponseEntity<>(service.updatePassword(username, request.getPassword(),
 					request.getNewPassword(), request.getDateOfBirth()), HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = "/{username}/delete")
 	public ResponseEntity<String> deleteUser (@PathVariable String username) {
-		tweetProducer.sendMessage("User delete request initiated");
+		tweetProducer.sendMessage("[kafka]User delete request initiated");
 		return new ResponseEntity<>(service.deleteUser(username), HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping(path = "/{username}/logout")
 	public ResponseEntity<String> logout (@PathVariable String username) {
-		tweetProducer.sendMessage("User logout request initiated");
+		tweetProducer.sendMessage("[kafka]User logout request initiated");
 		return new ResponseEntity<>(service.logout(username), HttpStatus.OK);
 	}
 }

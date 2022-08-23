@@ -32,7 +32,7 @@ public class ReplyController {
 	public ResponseEntity<ReplyEntity> postReply(@PathVariable String username, @PathVariable long id,
 	                                             @RequestParam String body) {
 		isValidTweet(body);
-		tweetProducer.sendMessage("post reply request to the tweet id -> " + id + " initiated");
+		tweetProducer.sendMessage("[kafka]post reply request to the tweet id -> " + id + " initiated");
 			return new ResponseEntity<>
 					(replyService.postReply(new ReplyEntity(id,username,body)), HttpStatus.CREATED);
 //		return new ResponseEntity<>

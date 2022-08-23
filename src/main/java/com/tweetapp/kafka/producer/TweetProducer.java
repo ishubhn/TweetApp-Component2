@@ -19,7 +19,7 @@ public class TweetProducer {
 	}
 
 	public void sendMessage(String msg) {
-		LOG.info("Message sent -> " + msg);
+//		LOG.info("Message sent -> " + msg);
 		this.kafkaTemplate.send(TOPIC, msg);
 
 	}
