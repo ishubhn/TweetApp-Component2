@@ -5,6 +5,7 @@ import com.tweetapp.kafka.producer.TweetProducer;
 import com.tweetapp.model.UserEntity;
 import com.tweetapp.model.dto.request.ForgotPasswordRequest;
 import com.tweetapp.model.dto.request.LoginRequest;
+import com.tweetapp.model.dto.response.MessageResponse;
 import com.tweetapp.model.dto.response.UserResponse;
 import com.tweetapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,21 +51,21 @@ public class UserController {
 	}
 
 	@PostMapping(path = "/{username}/forgot")
-	public ResponseEntity<String> forgotPassword (@PathVariable String username,
-	                                              @RequestBody ForgotPasswordRequest request) throws ParseException {
+	public ResponseEntity<MessageResponse> forgotPassword(@PathVariable String username,
+														  @RequestBody ForgotPasswordRequest request) throws ParseException {
 		tweetProducer.sendMessage("[kafka]User password update request initiated");
 		return new ResponseEntity<>(service.updatePassword(username, request.getPassword(),
-					request.getNewPassword(), request.getDateOfBirth()), HttpStatus.OK);
+				request.getNewPassword(), request.getDateOfBirth()), HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = "/{username}/delete")
-	public ResponseEntity<String> deleteUser (@PathVariable String username) {
+	public ResponseEntity<MessageResponse> deleteUser(@PathVariable String username) {
 		tweetProducer.sendMessage("[kafka]User delete request initiated");
 		return new ResponseEntity<>(service.deleteUser(username), HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping(path = "/{username}/logout")
-	public ResponseEntity<String> logout (@PathVariable String username) {
+	public ResponseEntity<MessageResponse> logout(@PathVariable String username) {
 		tweetProducer.sendMessage("[kafka]User logout request initiated");
 		return new ResponseEntity<>(service.logout(username), HttpStatus.OK);
 	}

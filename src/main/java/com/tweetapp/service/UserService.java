@@ -6,6 +6,7 @@ import com.tweetapp.exception.UserNotFoundException;
 import com.tweetapp.mapper.UserMapper;
 import com.tweetapp.model.UserEntity;
 import com.tweetapp.model.dto.request.LoginRequest;
+import com.tweetapp.model.dto.response.MessageResponse;
 import com.tweetapp.model.dto.response.UserResponse;
 import com.tweetapp.model.util.DateUtil;
 import com.tweetapp.repository.UserRepository;
@@ -103,13 +104,12 @@ public class UserService {
 				throw new InvalidLoginException("Invalid User Credentials. Please use correct credentials");
 			}
 		} else {
-			log.error("User login unsuccessful");
+			log.error("User login unsuccessful. User doesn't exist");
+			throw new InvalidLoginException("Invalid User Credentials. Please use correct credentials");
 		}
-
-		return null;
 	} // ok
 
-	public String updatePassword(String email, String password, String newPassword, String dateOfBirth) {
+	public MessageResponse updatePassword(String email, String password, String newPassword, String dateOfBirth) {
 
 		if (isUserPresent(email)) {
 			UserEntity user = findUserById(email);
@@ -125,25 +125,27 @@ public class UserService {
 				user.setPassword(newPassword);
 				repo.save(user);
 				log.info("Password for user ->  " + email + " changed successfully.");
-				return "Password for user ->  " + email + " changed successfully.";
+				String message = "Password for user ->  " + email + " changed successfully.";
+				return new MessageResponse(message, "Success");
 			} else {
 				log.error("User credentials mismatched. Unable to process request");
 				throw new InvalidLoginException("Invalid User Credentials, or user not logged in or invalid date of birth");
 			}
 		} else {
 			log.error("User not found.");
+			throw new InvalidLoginException("Invalid User Credentials, or user not logged in or invalid date of birth");
 		}
-		return "An error occurred while updating password";
 	} // ok
 
-	public String deleteUser(String email) {
+	public MessageResponse deleteUser(String email) {
 		if (isUserPresent(email)) {
 			UserEntity user = findUserById(email);
 
 			if (user.getLoggedIn().equalsIgnoreCase("true")) {
 				repo.delete(user);
 				log.info("User deleted successfully");
-				return "User deleted successfully";
+				String message = "User deleted successfully";
+				return new MessageResponse(message, "Success");
 			} else {
 				throw new InvalidLoginException("User is not logged in");
 			}
@@ -152,7 +154,7 @@ public class UserService {
 		}
 	}
 
-	public String logout(String email) {
+	public MessageResponse logout(String email) {
 		if (isUserPresent(email)) {
 			UserEntity user = findUserById(email);
 
@@ -160,7 +162,8 @@ public class UserService {
 				user.setLoggedIn("false");
 				repo.save(user);
 				log.info("User logged out successfully");
-				return "User logged out successfully";
+				String message = "User logged out successfully";
+				return new MessageResponse(message, "Success");
 			} else {
 				throw new InvalidLoginException("User is not logged in");
 			}

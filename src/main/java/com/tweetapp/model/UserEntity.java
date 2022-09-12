@@ -45,7 +45,7 @@ public class UserEntity {
 	private String contactNumber;
 
 	@NotBlank(message = "Password is mandatory")
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$",
 			message = "Password must contain at least 1 digit, 1 lowercase, 1 uppercase and" +
 					"1 symbol characters")
 	private String password;

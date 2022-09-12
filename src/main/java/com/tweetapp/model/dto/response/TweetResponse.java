@@ -1,11 +1,12 @@
 package com.tweetapp.model.dto.response;
 
+import com.tweetapp.model.ReplyEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,5 +16,6 @@ public class TweetResponse {
 	private String email;
 	private String body;
 	private int likes;
+	private List<ReplyEntity> replies;
 	private Date timestamp;
 }
